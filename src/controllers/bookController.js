@@ -114,3 +114,35 @@ exports.createBook = async (req, res) => {
       res.status(500).json({ error: error.message })
     }
   }
+
+  exports.updateBook = async (req, res) => {
+    try {
+        const { title, author, genre, year, pages, description } = req.body
+        const {id} = req.params
+        const userId = req.userId
+
+        const result = await pool.query(
+            `
+            UPDATE books
+            SET title = $1, author = $2, genre = $3,
+                year = $4, pages = $5, description = $6
+
+            WHERE id = $7 AND user_id = $8
+            RETURNING *
+            `,
+            [title, author, genre, year, pages, description, id, userId]
+        )
+        if(result.rows.length === 0){
+            return res.status(404).json({ error: 'Book not found' })
+          }
+        
+        
+        res.status(200).json({
+            success: true,
+            data: result.rows[0]
+          })
+  
+    } catch(error) {
+      res.status(500).json({ error: error.message })
+    }
+  }
