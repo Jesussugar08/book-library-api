@@ -3,6 +3,7 @@ const express = require('express')
 const app = express()
 app.use(express.json())
 
+const uploadRoutes = require('./routes/upload')
 const pool = require('./config/database')
 const authRoutes = require('./routes/auth')
 const booksRoutes = require('./routes/books')
@@ -10,7 +11,7 @@ const booksRoutes = require('./routes/books')
 
 app.use('/api/books', booksRoutes)
 app.use('/api/auth', authRoutes)
-
+app.use('/api/upload', uploadRoutes)
 app.get('/api/health', (req, res) => {
 
 
