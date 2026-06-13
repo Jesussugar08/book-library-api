@@ -1,6 +1,14 @@
 require('dotenv').config()
 const express = require('express')
+const cors = require('cors') 
 const app = express()
+
+app.use(cors({                      // ← CORS primero
+    origin: 'http://localhost:5173',
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+  }))
+
 app.use(express.json())
 
 const uploadRoutes = require('./routes/upload')
@@ -23,4 +31,6 @@ app.get('/api/health', (req, res) => {
 app.listen(5000, () => {
     console.log('Server running on port 5000')
 })
+
+
 
