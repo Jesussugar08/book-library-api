@@ -10,6 +10,9 @@ exports.getBooks = async(req, res) =>{
             `SELECT
                 books.id,
                 title,
+                author,
+                genre,
+                cover_url,
                 status,
                 rating
             FROM books
