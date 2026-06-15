@@ -36,15 +36,15 @@ exports.getBooks = async(req, res) =>{
 exports.createBook = async (req, res) => {
     try {
     
-        const { title, author, genre, year } = req.body
+        const { title, author, genre, year, pages, description, cover_url } = req.body
 
         const userId = req.userId
 
         const result = await pool.query(
-            `INSERT INTO books(title, author, genre, year, user_id)
-             VALUES ($1, $2, $3, $4, $5)
+            `INSERT INTO books(title, author, genre, year, pages, description, cover_url, user_id)
+             VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
              RETURNING * `,
-            [title, author, genre, year, userId]
+            [title, author, genre, year, pages, description, cover_url, userId]
         )
 
 
