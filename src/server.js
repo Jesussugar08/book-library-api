@@ -4,12 +4,11 @@ const cors = require('cors')
 const app = express()
 
 app.use(cors({
-  origin: [
-    'http://localhost:5173',
-    'https://book-library-frontend-seven.vercel.app'
-  ],
+  origin: process.env.CORS_ORIGIN
+    ? process.env.CORS_ORIGIN.split(',').map((o) => o.trim())
+    : ['http://localhost:5173', 'https://book-library-frontend-seven.vercel.app'],
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization']
+  allowedHeaders: ['Content-Type', 'Authorization'],
 }))
 
 app.use(express.json())
