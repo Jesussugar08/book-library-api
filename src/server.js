@@ -3,8 +3,11 @@ const express = require('express')
 const cors = require('cors') 
 const app = express()
 
-app.use(cors({                      // ← CORS primero
-    origin: 'http://localhost:5173',
+app.use(cors({
+    origin: [
+      'http://localhost:5173',
+      'https://book-library-frontend-seven.vercel.app'
+    ],
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization']
   }))
