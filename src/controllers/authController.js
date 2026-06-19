@@ -1,6 +1,8 @@
 const bcrypt = require('bcrypt')
 const tkns = require('jsonwebtoken')
 const pool = require('../config/database')
+const { SNSClient, PublishCommand } = require('@aws-sdk/client-sns') 
+const sns = new SNSClient({ region: 'us-east-1' }) 
 
 exports.register = async (req, res) => {
   try {
