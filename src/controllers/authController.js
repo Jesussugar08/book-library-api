@@ -38,6 +38,18 @@ exports.register = async (req, res) => {
       { expiresIn: '7d' }
     )
 
+    try {
+      await sns.send(new PublishCommand({
+        TopicArn: process.env.SNS_TOPIC_ARN,
+        Message: JSON.stringify({
+          nombre: newUser.rows[0].name,
+          email: newUser.rows[0].email,
+        }),
+      }))
+    } catch (snsError) {
+      console.error('SNS publish error:', snsError)
+    }
+
     res.status(201).json({
       success: true,
       data: {
@@ -94,3 +106,4 @@ exports.login = async (req, res) => {
     res.status(500).json({ error: error.message })
   }
 }
+
